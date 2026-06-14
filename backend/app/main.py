@@ -1,6 +1,10 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.resume_parser import extract_text
+from app.skill_extractor import extract_skills
+from app.analyzer import analyze
+
 app = FastAPI()
 
 app.add_middleware(
@@ -22,15 +26,14 @@ async def analyze_resume(
     resume: UploadFile = File(...),
     job_description: str = Form(...)
 ):
-    return {
-        "filename": resume.filename,
-        "job_description_length": len(job_description),
-        "ats_score": 78,
-        "matching_skills": ["Python", "Machine Learning", "SQL"],
-        "missing_skills": ["Docker", "Kubernetes"],
-        "suggestions": [
-            "Add Docker experience.",
-            "Quantify project achievements.",
-            "Include more cloud-related skills."
-        ]
-    }
+    resume_text = extract_text(resume)
+
+    resume_skills = extract_skills(resume_text)
+    jd_skills = extract_skills(job_description)
+
+    results = analyze(
+        resume_skills,
+        jd_skills
+    )
+
+    return results
