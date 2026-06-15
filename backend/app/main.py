@@ -4,8 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.resume_parser import extract_text
 from app.skill_extractor import extract_skills
 from app.analyzer import analyze
+from app.semantic_analyzer import semantic_similarity
 
 app = FastAPI()
+
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,9 +34,15 @@ async def analyze_resume(
     resume_skills = extract_skills(resume_text)
     jd_skills = extract_skills(job_description)
 
+    semantic_score = semantic_similarity(
+        resume_text,
+        job_description
+    )
+
     results = analyze(
         resume_skills,
-        jd_skills
+        jd_skills,
+        semantic_score
     )
 
     return results

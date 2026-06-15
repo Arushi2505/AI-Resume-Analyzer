@@ -1,4 +1,8 @@
-def analyze(resume_skills, jd_skills):
+def analyze(
+    resume_skills,
+    jd_skills,
+    semantic_score
+):
 
     matching = list(
         set(resume_skills)
@@ -11,11 +15,20 @@ def analyze(resume_skills, jd_skills):
     )
 
     if len(jd_skills) == 0:
-        score = 0
+        skill_score = 0
     else:
-        score = round(
-            len(matching) / len(jd_skills) * 100
-        )
+        skill_score = (
+            len(matching)
+            / len(jd_skills)
+        ) * 100
+
+    ats_score = round(
+        (
+            0.6 * skill_score
+            + 0.4 * semantic_score
+        ),
+        2
+    )
 
     suggestions = [
         f"Consider adding {skill}"
@@ -23,7 +36,9 @@ def analyze(resume_skills, jd_skills):
     ]
 
     return {
-        "ats_score": score,
+        "ats_score": ats_score,
+        "semantic_score": semantic_score,
+        "skill_score": round(skill_score, 2),
         "matching_skills": matching,
         "missing_skills": missing,
         "suggestions": suggestions,

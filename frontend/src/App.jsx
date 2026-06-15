@@ -72,9 +72,13 @@ function App() {
         {result && (
           <div className="mt-8 space-y-4">
             <div className="p-4 border rounded">
-              <h2 className="text-2xl font-bold">
-                ATS Score: {result.ats_score}%
-              </h2>
+              <p className="mt-2">
+                Semantic Score: {result.semantic_score}%
+              </p>
+
+              <p>
+                Skill Score: {result.skill_score}%
+              </p>
             </div>
 
             <div className="p-4 border rounded">
