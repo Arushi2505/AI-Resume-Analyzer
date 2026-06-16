@@ -12,3 +12,10 @@ frontend/dist/
 
 # Environment files
 .env
+
+# Logs
+logs
+*.log
+
+node_modules
+dist
