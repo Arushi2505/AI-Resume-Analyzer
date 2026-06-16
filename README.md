@@ -117,6 +117,14 @@ Form Data:
 
 ---
 
+## Screenshots
+
+### Home Page
+![Home Page](screenshots/home.png)
+
+### Analysis Results
+![Analysis Results](screenshots/results.png)
+
 ## Future Improvements
 
 - Sentence-transformers for advanced semantic matching
