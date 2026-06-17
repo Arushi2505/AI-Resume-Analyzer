@@ -12,8 +12,12 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",
     "axios": "^1.17.0",
+    "lucide-react": "^1.20.0",
     "react": "^19.2.6",
+    "react-circular-progressbar": "^2.2.0",
     "react-dom": "^19.2.6",
+    "react-router-dom": "^7.18.0",
+    "recharts": "^3.8.1",
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
