@@ -83,6 +83,40 @@ function Analyzer() {
     }
   };
 
+  const getCareerSuggestions = () => {
+
+  const skills =
+    result?.matching_skills || [];
+
+  const careers = [];
+
+  if (skills.includes("python")) {
+    careers.push("Machine Learning Engineer");
+    careers.push("AI Engineer");
+  }
+
+  if (skills.includes("sql")) {
+    careers.push("Data Scientist");
+  }
+
+  if (skills.includes("fastapi")) {
+    careers.push("Backend AI Engineer");
+  }
+
+  if (skills.includes("react")) {
+    careers.push("Full Stack AI Developer");
+  }
+
+  if (
+    skills.includes("python") &&
+    skills.includes("sql")
+  ) {
+    careers.push("Analytics Engineer");
+  }
+
+  return [...new Set(careers)];
+};
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 p-8">
       <div className="w-full max-w-7xl rounded-[28px] border border-white/60 bg-white/85 backdrop-blur-xl p-10 shadow-[0_30px_60px_-30px_rgba(15,23,42,0.65)]">
@@ -255,27 +289,80 @@ function Analyzer() {
             {/* Suggestions */}
             <div className="p-6 rounded-3xl card-surface border-l-4 border-l-amber-500 bg-gradient-to-br from-amber-50/50 to-transparent">
 
-              <h3 className="font-bold mb-4 text-slate-900 text-xl">💡 Recommendations</h3>
+            <h3 className="font-bold mb-4 text-slate-900 text-xl">
+                💡 Recommendations
+            </h3>
 
-              <ul className="space-y-3">
+            <ul className="space-y-3">
 
                 {result.suggestions.map(
-                  (item, index) => (
+                (item, index) => (
                     <li
-                      key={index}
-                      className="bg-gradient-to-r from-amber-50 to-yellow-50 p-4 rounded-xl border-l-4 border-l-amber-400 hover:shadow-md transition"
+                    key={index}
+                    className="bg-gradient-to-r from-amber-50 to-yellow-50 p-4 rounded-xl border-l-4 border-l-amber-400 hover:shadow-md transition"
                     >
-                      <span className="text-lg mr-3">💡</span>{item}
+                    <span className="text-lg mr-3">💡</span>
+                    {item}
                     </li>
-                  )
+                )
                 )}
 
-              </ul>
+            </ul>
 
             </div>
 
+            {/* Career Recommendations */}
+<div className="p-6 rounded-3xl card-surface border-l-4 border-l-indigo-500 bg-gradient-to-br from-indigo-50/50 to-transparent">
+
+  <h3 className="font-bold mb-4 text-slate-900 text-xl">
+    🚀 Career Recommendations
+  </h3>
+
+  <div className="space-y-3">
+
+    {getCareerSuggestions().length > 0 ? (
+
+      getCareerSuggestions().map(
+        (career, index) => (
+
+          <div
+            key={index}
+            className="
+              bg-indigo-100
+              text-indigo-800
+              p-4
+              rounded-xl
+              font-medium
+            "
+          >
+            ⭐ {career}
           </div>
-        )}
+
+        )
+      )
+
+    ) : (
+
+      <div
+        className="
+          bg-slate-100
+          text-slate-600
+          p-4
+          rounded-xl
+        "
+      >
+        Analyze a resume with more technical skills
+        to get career recommendations.
+      </div>
+
+    )}
+
+  </div>
+
+</div>
+
+</div>
+)}
 
       </div>
     </div>
