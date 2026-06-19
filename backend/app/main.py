@@ -1,15 +1,12 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.resume_parser import extract_text
-from app.skill_extractor import extract_skills
-from app.analyzer import analyze
-from app.semantic_analyzer import semantic_similarity
+from app.routes.analyzer import router as analyzer_router
+from app.routes.cover_letter import router as cover_letter_router
 
 app = FastAPI()
-
-
-
+app.include_router(analyzer_router)
+app.include_router(cover_letter_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -27,25 +24,3 @@ def home():
     return {"message": "AI Resume Analyzer Backend Running"}
 
 
-@app.post("/analyze")
-async def analyze_resume(
-    resume: UploadFile = File(...),
-    job_description: str = Form(...)
-):
-    resume_text = extract_text(resume)
-
-    resume_skills = extract_skills(resume_text)
-    jd_skills = extract_skills(job_description)
-
-    semantic_score = semantic_similarity(
-        resume_text,
-        job_description
-    )
-
-    results = analyze(
-        resume_skills,
-        jd_skills,
-        semantic_score
-    )
-
-    return results

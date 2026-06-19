@@ -1,0 +1,12 @@
+* [33m649834e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/llm-integration[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/llm-integration[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Add career recommendations feature
+* [33md75306c[m Add dashboard analytics, ATS trend chart, history tracking and interview prep
+* [33md9acac5[m Add screenshots section to README
+*   [33mb81dc11[m Merge branch 'main' of https://github.com/Arushi2505/AI-Resume-Analyzer
+[32m|[m[33m\[m  
+[32m|[m * [33m856de5d[m Add README for AI Resume Analyzer project
+* [33m|[m [33m17acc6e[m Add project screenshots
+[33m|[m[33m/[m  
+* [33m96435d7[m Update CORS for Vercel frontend
+* [33m3ae10b2[m Replace localhost with Render backend URL
+* [33m30b2ccd[m Connect frontend to deployed backend
+* [33mbae5140[m Allow Vercel frontend in CORS

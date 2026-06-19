@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function CoverLetter() {
 
@@ -11,58 +12,66 @@ function CoverLetter() {
   const [letter, setLetter] =
     useState("");
 
-  const generateLetter = () => {
+  const generateLetter = async () => {
 
-    const history =
-      JSON.parse(
-        localStorage.getItem(
-          "analyses"
-        )
-      ) || [];
+  const resume =
+    document.getElementById("resumeFile")
+    ?.files?.[0];
 
-    if (history.length === 0) {
+  if (!resume) {
+    alert("Please upload your resume.");
+    return;
+  }
 
-      alert(
-        "Analyze a resume first."
+  if (!company || !jobTitle) {
+    alert("Enter company and job title.");
+    return;
+  }
+
+  const formData = new FormData();
+
+  formData.append(
+    "resume",
+    resume
+  );
+
+  formData.append(
+    "job_description",
+    `
+Company: ${company}
+
+Role: ${jobTitle}
+`
+  );
+
+  try {
+
+    const response =
+      await axios.post(
+
+        "http://127.0.0.1:8000/generate-cover-letter",
+
+        formData
+
       );
 
-      return;
-    }
+    setLetter(
+      response.data.cover_letter
+    );
 
-    const latest = history[0];
+  }
 
-    const skills =
-      latest.matching_skills?.join(", ")
-      || "Python";
+  catch(err){
 
-    const generated = `
-Dear Hiring Manager,
+    console.log(err);
 
-I am excited to apply for the ${jobTitle}
-position at ${company}.
+    alert(
+      "Failed to generate."
+    );
 
-My background includes experience in
-${skills}, and I have worked on AI,
-machine learning, and full-stack
-development projects.
+  }
 
-I am passionate about building
-impactful solutions and continuously
-learning new technologies.
-
-I believe my technical skills and
-problem-solving abilities would make
-me a valuable addition to your team.
-
-Thank you for your time and
-consideration.
-
-Sincerely,
-Arushi
-`;
-
-    setLetter(generated);
-  };
+};
 
   return (
     <div className="
@@ -87,7 +96,21 @@ Arushi
         shadow
         p-6
       ">
+        <div className="mb-4">
 
+        <input
+
+        id="resumeFile"
+
+        type="file"
+
+        accept=".pdf"
+
+        className="w-full border rounded-lg p-3"
+
+        />
+
+        </div>
         <input
           type="text"
           placeholder="Company Name"
